@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Diario de Clases</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .date-display {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .clase-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .clase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .clase-numero {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .btn-remove {
+            background: #dc3545;
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
+        .resumen {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+    
+        <link rel="icon" href="logo.png" type="image/x-icon">
+      
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Informe Diario de Clases</h1>
+            <div class="date-display" id="fechaActual"></div>
+        </div>
+
+        <div class="content">
+            <div class="alert alert-success" id="alertSuccess">
+                ✅ Clase agregada correctamente
+            </div>
+            
+            <div class="alert alert-error" id="alertError">
+                ❌ Por favor complete todos los campos
+            </div>
+
+            <div class="form-section">
+                <h2 class="section-title">➕ Agregar Clase</h2>
+                
+                <div class="form-group">
+                    <label for="area">Área o Asignatura:</label>
+                    <select id="area" required>
+                        <option value="">Seleccione una asignatura...</option>
+                        <option value="Matemáticas">Matemáticas</option>
+                        <option value="Matemáticas">Razonamiento Matemático</option>
+                        <option value="Matemáticas">Música</option>
+                        <option value="Comunicación">Comunicación</option>
+                        <option value="Ciencia y Tecnología">Ciencia y Tecnología</option>
+                        <option value="Personal Social">Personal Social</option>
+                        <option value="Arte y Cultura">Arte</option>
+                        <option value="Educación Física">Educación Física</option>
+                        <option value="Educación Religiosa">Religión</option>
+                        <option value="Inglés">Inglés</option>
+                        <option value="Tutoría">Taekwondo</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tema">Tema desarrollado:</label>
+                    <input type="text" id="tema" placeholder="Ej: Operaciones con fracciones" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="procesos">Procesos Pedagógicos:</label>
+                    <textarea id="procesos" placeholder="Describa cómo se desarrolló la clase, metodologías utilizadas, actividades realizadas..." required></textarea>
+                </div>
+
+                <button type="button" class="btn" onclick="agregarClase()">➕ Agregar Clase</button>
+            </div>
+
+            <div class="form-section" id="clasesList">
+                <h2 class="section-title">📋 Clases del Día (<span id="contadorClases">0</span>)</h2>
+                <div id="clasesContainer">
+                    <p style="text-align: center; color: #666; font-style: italic;">No hay clases agregadas aún</p>
+                </div>
+            </div>
+
+            <div class="resumen">
+                <h3>📊 Resumen del Día</h3>
+                <p><strong>Total de clases:</strong> <span id="totalClases">0</span></p>
+                <p><strong>Fecha:</strong> <span id="fechaResumen"></span></p>
+                
+                <div style="margin-top: 20px;">
+                    <button class="btn" onclick="generarWord()">📄 Generar Documento Word</button>
+                    <button class="btn btn-secondary" onclick="limpiarTodo()">🗑️ Limpiar Todo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let clases = [];
+        let contadorClases = 0;
+
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', function() {
+            actualizarFecha();
+            cargarDatosGuardados();
+        });
+
+        function actualizarFecha() {
+            const ahora = new Date();
+            const opciones = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const fechaFormateada = ahora.toLocaleDateString('es-ES', opciones);
+            
+            document.getElementById('fechaActual').textContent = fechaFormateada;
+            document.getElementById('fechaResumen').textContent = fechaFormateada;
+        }
+
+        function agregarClase() {
+            const area = document.getElementById('area').value;
+            const tema = document.getElementById('tema').value;
+            const procesos = document.getElementById('procesos').value;
+
+            if (!area || !tema || !procesos) {
+                mostrarAlerta('error', 'Por favor complete todos los campos');
+                return;
+            }
+
+            const ahora = new Date();
+            const horaActual = ahora.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            const nuevaClase = {
+                id: Date.now(),
+                area: area,
+                tema: tema,
+                procesos: procesos,
+                hora: horaActual,
+                timestamp: ahora.toISOString()
+            };
+
+            clases.push(nuevaClase);
+            contadorClases++;
+
+            actualizarListaClases();
+            limpiarFormulario();
+            guardarDatos();
+            mostrarAlerta('success', 'Clase agregada correctamente');
+        }
+
+        function actualizarListaClases() {
+            const container = document.getElementById('clasesContainer');
+            const contador = document.getElementById('contadorClases');
+            const total = document.getElementById('totalClases');
+
+            contador.textContent = clases.length;
+            total.textContent = clases.length;
+
+            if (clases.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; font-style: italic;">No hay clases agregadas aún</p>';
+            } else {
+                container.innerHTML = clases.map((clase, index) => `
+                    <div class="clase-item">
+                        <div class="clase-header">
+                            <span class="clase-numero">Clase ${index + 1}</span>
+                            <div>
+                                <span style="color: #666; margin-right: 15px;">🕐 ${clase.hora}</span>
+                                <button class="btn btn-remove" onclick="eliminarClase(${clase.id})">🗑️</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <strong>📚 Área/Asignatura:</strong> ${clase.area}
+                        </div>
+                        <div class="form-group">
+                            <strong>📖 Tema:</strong> ${clase.tema}
+                        </div>
+                        <div class="form-group">
+                            <strong>🎯 Procesos Pedagógicos:</strong>
+                            <div style="margin-top: 8px; padding: 10px; background: white; border-radius: 5px; border-left: 3px solid #667eea;">
+                                ${clase.procesos}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function eliminarClase(id) {
+            clases = clases.filter(clase => clase.id !== id);
+            actualizarListaClases();
+            guardarDatos();
+        }
+
+        function limpiarFormulario() {
+            document.getElementById('area').value = '';
+            document.getElementById('tema').value = '';
+            document.getElementById('procesos').value = '';
+        }
+
+        function limpiarTodo() {
+            if (confirm('¿Está seguro de que desea limpiar todos los datos del día?')) {
+                clases = [];
+                contadorClases = 0;
+                actualizarListaClases();
+                limpiarFormulario();
+                guardarDatos();
+            }
+        }
+
+        function mostrarAlerta(tipo, mensaje) {
+            const alerta = document.getElementById(`alert${tipo === 'success' ? 'Success' : 'Error'}`);
+            alerta.style.display = 'block';
+            alerta.textContent = (tipo === 'success' ? '✅ ' : '❌ ') + mensaje;
+            
+            setTimeout(() => {
+                alerta.style.display = 'none';
+            }, 3000);
+        }
+
+        function generarWord() {
+            if (clases.length === 0) {
+                mostrarAlerta('error', 'No hay clases para generar el documento');
+                return;
+            }
+
+            const fecha = new Date().toLocaleDateString('es-ES', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            // Crear el contenido HTML con tabla
+            let contenidoHTML = `
+                <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Informe Diario de Clases</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 40px; }
+                            .header { text-align: center; margin-bottom: 30px; }
+                            .fecha { font-size: 14px; color: #666; margin-bottom: 10px; }
+                            .titulo { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 20px; }
+                            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                            th, td { border: 1px solid #ddd; padding: 12px; text-align: left; vertical-align: top; }
+                            th { background-color: #667eea; color: white; font-weight: bold; }
+                            tr:nth-child(even) { background-color: #f9f9f9; }
+                            .numero-clase { text-align: center; font-weight: bold; }
+                            .hora { text-align: center; }
+                            .procesos { max-width: 300px; line-height: 1.4; }
+                            .footer { margin-top: 30px; text-align: center; font-size: 12px; color: #666; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header">
+                            <div class="fecha">${fecha}</div>
+                            <div class="titulo">INFORME DIARIO DE CLASES</div>
+                            <div>Total de clases desarrolladas: ${clases.length}</div>
+                        </div>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width: 8%;">N°</th>
+                                    <th style="width: 10%;">Hora</th>
+                                    <th style="width: 20%;">Área/Asignatura</th>
+                                    <th style="width: 25%;">Tema Desarrollado</th>
+                                    <th style="width: 37%;">Procesos Pedagógicos</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+            // Agregar filas de la tabla con los datos de las clases
+            clases.forEach((clase, index) => {
+                contenidoHTML += `
+                    <tr>
+                        <td class="numero-clase">${index + 1}</td>
+                        <td class="hora">${clase.hora}</td>
+                        <td>${clase.area}</td>
+                        <td>${clase.tema}</td>
+                        <td class="procesos">${clase.procesos}</td>
+                    </tr>`;
+            });
+
+           
+
+            // Crear documento Word usando HTML
+            const header = `MIME-Version: 1.0
+Content-Type: multipart/related; boundary="NEXT.ITEM-BOUNDARY";type="text/html"
+
+--NEXT.ITEM-BOUNDARY
+Content-Type: text/html; charset="utf-8"
+Content-Location: file:///C:/informe.html
+
+` + contenidoHTML + `
+--NEXT.ITEM-BOUNDARY--`;
+
+            // Crear y descargar el archivo
+            const blob = new Blob([header], { 
+                type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' 
+            });
+            
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            const fechaArchivo = new Date().toISOString().split('T')[0];
+            a.href = url;
+            a.download = `Informe_Diario_Clases_${fechaArchivo}.doc`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+
+            mostrarAlerta('success', 'Documento Word generado y descargado correctamente');
+        }
+
+        function guardarDatos() {
+            const datos = {
+                clases: clases,
+                fecha: new Date().toDateString()
+            };
+            // En una app real con Cordova, aquí guardarías en el almacenamiento local
+            // localStorage.setItem('informeDiario', JSON.stringify(datos));
+        }
+
+        function cargarDatosGuardados() {
+            // En una app real con Cordova, aquí cargarías del almacenamiento local
+            // const datosGuardados = localStorage.getItem('informeDiario');
+            // if (datosGuardados) {
+            //     const datos = JSON.parse(datosGuardados);
+            //     if (datos.fecha === new Date().toDateString()) {
+            //         clases = datos.clases || [];
+            //         actualizarListaClases();
+            //     }
+            // }
+        }
+    </script>
+</body>
+</html>
